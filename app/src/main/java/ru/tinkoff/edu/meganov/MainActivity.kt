@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.tinkoff.edu.meganov.data.MovieRepo
-import ru.tinkoff.edu.meganov.ui.composables.MoviesList
+import ru.tinkoff.edu.meganov.ui.composables.App
 import ru.tinkoff.edu.meganov.ui.theme.MovieAppTheme
 import ru.tinkoff.edu.meganov.viewmodel.MovieListVM
 
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 )
-                MoviesList(viewModel = viewModel)
+                App(context = this, viewModel = viewModel)
             }
         }
     }
