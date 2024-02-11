@@ -11,3 +11,5 @@ MovieApp is an Android application that provides a list of popular movies and th
 - **Favorites Section**: On the main screen, there are "Popular" and "Favorites" sections. A long click on a movie card adds the movie to favorites and stores it in the database. Favorite movies are available offline.
 - **Highlight Favorites**: While viewing popular movies, movies in the favorites are highlighted.
 - **Search**: Search for movies by title in the sections is available.
+
+![Alt text](/screenshots/Screenshot_20240211-212910.png "Movies List")
