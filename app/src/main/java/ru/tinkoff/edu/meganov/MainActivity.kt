@@ -17,10 +17,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MovieAppTheme {
+//                val systemUiController = rememberSystemUiController()
+//                systemUiController.setSystemBarsColor(color = Color.Transparent)
                 val viewModel = viewModel<MovieListVM>(
                     factory = object : ViewModelProvider.Factory {
                         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                            return MovieListVM(MovieRepo()) as T
+                            return MovieListVM(applicationContext, MovieRepo()) as T
                         }
                     }
                 )

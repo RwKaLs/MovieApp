@@ -22,7 +22,6 @@ fun App(context: Context, viewModel: MovieListVM, modifier: Modifier = Modifier)
             MovieDetails(viewModel, movieId, navController, modifier)
         }
     }
-
 }
 
 @Composable

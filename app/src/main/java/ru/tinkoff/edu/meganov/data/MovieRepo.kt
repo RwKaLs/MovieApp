@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.meganov.data
 
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,9 +17,12 @@ class MovieRepo {
     }
 
     suspend fun getMovieDetails(id: String): MovieDetailsResponse {
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://kinopoiskapiunofficial.tech")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         val service = retrofit.create(MovieService::class.java)

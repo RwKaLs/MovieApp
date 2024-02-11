@@ -1,24 +1,14 @@
 package ru.tinkoff.edu.meganov.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 data class MovieResponse(
     val total: Int,
     val totalPages: Int,
     val items: List<Movie>
-)
-
-@Entity
-data class MovieDetails(
-    @PrimaryKey val kinopoiskId: Int,
-    val nameRu: String,
-    val posterUrl: String,
-    val posterUrlPreview: String,
-    val year: Int,
-    val description: String,
-    val countries: List<Country>,
-    val genres: List<Genre>
 )
 
 data class MovieDetailsResponse(
@@ -54,8 +44,10 @@ data class MovieDetailsResponse(
     val has3D: Boolean
 )
 
+@Parcelize
+@Entity(tableName = "favouritemovies")
 data class Movie(
-    val kinopoiskId: Int,
+    @PrimaryKey val kinopoiskId: Int,
     val imdbId: String,
     val nameRu: String,
     val nameEn: String?,
@@ -68,12 +60,14 @@ data class Movie(
     val type: String,
     val posterUrl: String,
     val posterUrlPreview: String
-)
+) : Parcelable
 
+@Parcelize
 data class Country(
     val country: String
-)
+) : Parcelable
 
+@Parcelize
 data class Genre(
     val genre: String
-)
+) : Parcelable
