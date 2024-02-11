@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
@@ -28,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.tinkoff.edu.meganov.viewmodel.MovieListVM
@@ -65,7 +67,9 @@ fun MovieDetails(
         }
     ) {
         if (isLoading) {
-            // loading
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         } else if (loadError != null) {
             ErrorScreen(message = loadError!!, onRetry = {
                 movieId?.let { it1 ->
@@ -84,11 +88,11 @@ fun MovieDetails(
                             .aspectRatio(1f)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = movieDetails!!.description)
+                    Text(text = movieDetails!!.description, fontWeight = FontWeight.Medium)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "Жанры: ${movieDetails!!.genres.joinToString { it.genre }}")
+                    Text(text = "Жанры: ${movieDetails!!.genres.joinToString { it.genre }}", fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "Страны: ${movieDetails!!.countries.joinToString { it.country }}")
+                    Text(text = "Страны: ${movieDetails!!.countries.joinToString { it.country }}", fontWeight = FontWeight.Bold)
                 }
             }
         }
