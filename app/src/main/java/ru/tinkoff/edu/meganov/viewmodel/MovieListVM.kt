@@ -25,7 +25,6 @@ class MovieListVM(val context: Context, private val movieRepo: MovieRepo) : View
 
     val favoriteMovies: LiveData<List<Movie>> =
         AppDatabase.getDatabase(context).movieDetailsDao().getAll()
-    val showingmovies: LiveData<List<Movie>> = _movies
 
     private val _selectedMovie = MutableLiveData<MovieDetailsResponse>()
     val selectedMovie: LiveData<MovieDetailsResponse> get() = _selectedMovie
@@ -34,12 +33,13 @@ class MovieListVM(val context: Context, private val movieRepo: MovieRepo) : View
     val isLoading: LiveData<Boolean> get() = _isLoading
     private val _loadError = MutableLiveData<String?>()
     val loadError: LiveData<String?> get() = _loadError
+    private val _showingMovies = MutableLiveData<List<Movie>>()
+    val showingMovies: LiveData<List<Movie>> get() = _showingMovies
 
-    fun addMovieToFavorites(movie: Movie) {
-        viewModelScope.launch {
-            AppDatabase.getDatabase(context).movieDetailsDao().insert(movie)
-        }
+    fun updateShowingMovies(movies: List<Movie>) {
+        _showingMovies.value = movies
     }
+
 
     fun selectMovie(id: String) {
         _isLoading.value = true
@@ -64,6 +64,7 @@ class MovieListVM(val context: Context, private val movieRepo: MovieRepo) : View
                 _movies.value = _movies.value.orEmpty() + newMovies
                 currentPage++
                 _loadError.value = null
+                updateShowingMovies(_movies.value!!)
             } catch (e: Exception) {
                 _loadError.value = e.localizedMessage ?: "ERROR"
             }

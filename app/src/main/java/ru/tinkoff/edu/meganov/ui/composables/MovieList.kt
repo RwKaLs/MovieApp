@@ -67,18 +67,19 @@ fun MovieList(
     modifier: Modifier = Modifier
 ) {
     val movies by viewModel.movies.observeAsState(emptyList())
-    var showingmovies by rememberSaveable {
-        mutableStateOf(movies)
-    }
     var searchQuery by rememberSaveable {
         mutableStateOf("")
     }
     var favouriteSelected by rememberSaveable {
         mutableStateOf(false)
     }
+    var searching by rememberSaveable {
+        mutableStateOf(false)
+    }
     val isLoading by viewModel.isLoading.observeAsState(true)
     val loadError by viewModel.loadError.observeAsState()
     val favoriteMovies by viewModel.favoriteMovies.observeAsState()
+    val showingmovies by viewModel.showingMovies.observeAsState(emptyList())
     val movieDetailsDao = AppDatabase.getDatabase(context).movieDetailsDao()
     val portrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
     if (portrait || !portrait) {
@@ -102,9 +103,10 @@ fun MovieList(
                             )
                             IconButton(
                                 onClick = {
-                                    showingmovies = showingmovies.filter { movie ->
+                                    searching = searchQuery != ""
+                                    viewModel.updateShowingMovies(showingmovies.filter { movie ->
                                         movie.nameRu.contains(searchQuery, ignoreCase = true)
-                                    }
+                                    })
                                 },
                                 modifier = modifier
                                     .padding(start = 8.dp, end = 8.dp)
@@ -196,7 +198,7 @@ fun MovieList(
                                     }
                                 }
                             }
-                            if (movie == showingmovies.last() && !favouriteSelected) {
+                            if (movie == showingmovies.last() && !favouriteSelected && !searching) {
                                 LaunchedEffect(Unit) {
                                     viewModel.loadMoreMovies()
                                 }
@@ -215,7 +217,7 @@ fun MovieList(
                     selected = !favouriteSelected,
                     onClick = {
                         favouriteSelected = false
-                        showingmovies = movies
+                        viewModel.movies.value?.let { viewModel.updateShowingMovies(it) }
                     }
                 )
                 BottomNavigationItem(
@@ -224,7 +226,7 @@ fun MovieList(
                     selected = favouriteSelected,
                     onClick = {
                         favouriteSelected = true
-                        showingmovies = favoriteMovies!!
+                        viewModel.favoriteMovies.value?.let { viewModel.updateShowingMovies(it) }
                     }
                 )
             }
