@@ -15,3 +15,7 @@ MovieApp is an Android application that provides a list of popular movies and th
 | Movies List | Favourite Movies List | Search |
 |--------------|--------------|--------------|
 | ![Screenshot 1](/screenshots/Screenshot_20240211-212910.png) | ![Screenshot 2](/screenshots/Screenshot_20240211-212924.png) | ![Screenshot 3](/screenshots/Screenshot_20240211-212945.png) |
+
+| Details Screen | Error Screen |
+|--------------|--------------|--------------|
+| ![Screenshot 4](/screenshots/Screenshot_20240211-213609.png) | ![Screenshot 5](/screenshots/Screenshot_20240211-214121.png) | 
